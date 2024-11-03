@@ -1,8 +1,13 @@
 "use client";
 import { createTheme, MantineProvider } from "@mantine/core";
+
 import "@mantine/dates/styles.css";
 import "@mantine/core/styles.css";
 import "@mantine/notifications/styles.css";
+import "@mantine/core/styles.layer.css";
+import "mantine-datatable/styles.layer.css";
+import "@/styles/globals.css";
+
 import { SessionProvider } from "next-auth/react";
 import { Notifications } from "@mantine/notifications";
 import { ModalsProvider } from "@mantine/modals";
@@ -20,7 +25,6 @@ export default function MainProvider({ children }: Props) {
         <Notifications position="top-right" />
         <ModalsProvider>{children}</ModalsProvider>
       </MantineProvider>
-      ;
     </SessionProvider>
   );
 }

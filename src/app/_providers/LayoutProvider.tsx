@@ -36,7 +36,7 @@ export default function LayoutProvider(props: Props) {
             visibleFrom="sm"
             size="sm"
           />
-          <span className="text-xl font-bold text-blue-600">Venue Manager</span>
+          <span className="text-xl font-bold text-blue-600">Admin Manager</span>
         </Group>
       </AppShell.Header>
       <AppShell.Navbar>
