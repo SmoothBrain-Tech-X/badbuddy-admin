@@ -20,23 +20,26 @@ export default function Page() {
       ...LoadingNotificationData,
       message: "Creating venue...",
     });
-    createVenue.mutate(data, {
-      onSuccess: () => {
-        notifications.update({
-          id: keyNoti,
-          ...SuccessNotificationData,
-          message: "Venue created successfully",
-        });
-        navigate.push("/venue");
+    createVenue.mutate(
+      { ...data, status: data.status ?? "" },
+      {
+        onSuccess: () => {
+          notifications.update({
+            id: keyNoti,
+            ...SuccessNotificationData,
+            message: "Venue created successfully",
+          });
+          navigate.push("/venue");
+        },
+        onError: (error) => {
+          notifications.show({
+            id: keyNoti,
+            ...ErrorNotificationData,
+            message: error.message,
+          });
+        },
       },
-      onError: (error) => {
-        notifications.show({
-          id: keyNoti,
-          ...ErrorNotificationData,
-          message: error.message,
-        });
-      },
-    });
+    );
   };
   return (
     <div className="flex flex-col">
