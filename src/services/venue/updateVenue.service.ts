@@ -1,6 +1,5 @@
 import _ from "lodash";
 import { axiosAPIWithoutAuth } from "utils/axios";
-
 interface Openrange {
   day: string;
   is_open: boolean;
@@ -19,7 +18,17 @@ export type TUpdateVenue = {
   open_range: Openrange[];
   image_urls: string;
   status: string;
+  facilities: Facilitie[];
+  rules: Rule[];
 };
+
+export type Facilitie = {
+  id: string;
+};
+
+interface Rule {
+  rule: string;
+}
 
 const updateVenue = async (props: TUpdateVenue) => {
   try {

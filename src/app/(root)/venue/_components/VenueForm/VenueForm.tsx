@@ -14,6 +14,7 @@ import { IconPlus, IconTrash } from "@tabler/icons-react";
 import ControlledTimeInput from "@/app/_components/Controlled/ControlledTimeInput";
 import ControlledSwitch from "@/app/_components/Controlled/ControlledSwitch";
 import { venueStatus } from "utils/VenueStatusMap";
+import useGetFacilities from "@/hooks/facilitie/useGetFacilities";
 
 interface Props {
   type: "create" | "edit";
@@ -33,9 +34,29 @@ export default function VenueForm(props: Props) {
     resolver: zodResolver(venueSchema),
   });
 
+  const getFacilities = useGetFacilities();
+
   const { fields, append, remove } = useFieldArray({
     control,
     name: "open_range",
+  });
+
+  const {
+    fields: facilitieFields,
+    append: facilitieAppend,
+    remove: facilitieRemove,
+  } = useFieldArray({
+    control,
+    name: "facilities",
+  });
+
+  const {
+    fields: ruleFields,
+    append: ruleAppend,
+    remove: ruleRemove,
+  } = useFieldArray({
+    control,
+    name: "rules",
   });
 
   const onFinish = (data: VenueSchemaType) => {
@@ -55,6 +76,8 @@ export default function VenueForm(props: Props) {
       setValue("image_urls", props.data.image_urls);
       setValue("location", props.data.location);
       setValue("status", props.data.status);
+      setValue("facilities", props.data.facilities);
+      setValue("rules", props.data.rules);
     }
   }, [props.data, setValue]);
 
@@ -153,6 +176,7 @@ export default function VenueForm(props: Props) {
           }}
         />
       </div>
+
       <div className="flex flex-col gap-2">
         <InputLabel>Open Range</InputLabel>
         {fields.map((field, index) => (
@@ -204,9 +228,80 @@ export default function VenueForm(props: Props) {
           onClick={() =>
             append({
               day: "",
-              close_time: new Date().toISOString(),
-              open_time: new Date().toISOString(),
               is_open: false,
+              open_time: new Date().toISOString(),
+              close_time: new Date().toISOString(),
+            })
+          }
+        >
+          <IconPlus />
+        </ActionIcon>
+      </div>
+      <Divider my={5} />
+      <div className="flex flex-col gap-2">
+        <InputLabel>Rules</InputLabel>
+        {ruleFields.map((field, index) => (
+          <div className="flex items-baseline gap-3" key={field.id}>
+            <ControlledInputText
+              control={control}
+              name={`rules.${index}.rule`}
+              props={{
+                placeholder: "Rule",
+                withAsterisk: true,
+              }}
+            />
+            <div className="translate-y-[6px]">
+              <ActionIcon
+                onClick={() => ruleRemove(index)}
+                color="red"
+                variant="subtle"
+              >
+                <IconTrash />
+              </ActionIcon>
+            </div>
+          </div>
+        ))}
+        <ActionIcon
+          onClick={() =>
+            ruleAppend({
+              rule: "",
+            })
+          }
+        >
+          <IconPlus />
+        </ActionIcon>
+      </div>
+      <Divider my={5} />
+      <div className="flex flex-col gap-2">
+        <InputLabel>Facilities</InputLabel>
+        {facilitieFields.map((field, index) => (
+          <div className="flex items-baseline gap-3" key={field.id}>
+            <ControlledSelect
+              control={control}
+              name={`facilities.${index}.id`}
+              props={{
+                data: getFacilities.data?.facilities.map((facilitie) => ({
+                  value: facilitie.id,
+                  label: facilitie.name,
+                })),
+                searchable: true,
+              }}
+            />
+            <div className="translate-y-[8px]">
+              <ActionIcon
+                onClick={() => facilitieRemove(index)}
+                color="red"
+                variant="subtle"
+              >
+                <IconTrash />
+              </ActionIcon>
+            </div>
+          </div>
+        ))}
+        <ActionIcon
+          onClick={() =>
+            facilitieAppend({
+              id: "",
             })
           }
         >
