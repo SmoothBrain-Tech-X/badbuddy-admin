@@ -1,11 +1,13 @@
 "use client";
 import { Text } from "@mantine/core";
 import { type VenueSchemaType } from "@/schemas/venues/venue.schema";
-import VenueForm from "../../_components/VenueForm/VenueForm";
 import useGetVenue from "@/hooks/venue/useGetVenue";
+import { useParams } from "next/navigation";
+type TParams = { id: string };
 
-export default function Page({ params: { id } }: { params: { id: string } }) {
-  const getVenue = useGetVenue({ venue_id: id });
+export default function Page() {
+  const params = useParams<{ id: string }>();
+  const getVenue = useGetVenue({ venue_id: params.id });
   const onEdit = (data: VenueSchemaType) => {
     console.log(data);
   };
@@ -14,7 +16,6 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
       <Text size="xl" fw={700}>
         Edti Venue
       </Text>
-      <VenueForm type="edit" onFinish={onEdit} />
     </div>
   );
 }

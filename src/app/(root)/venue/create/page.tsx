@@ -9,8 +9,10 @@ import {
   LoadingNotificationData,
   SuccessNotificationData,
 } from "@/configs/NotificationData/NotificationData";
+import { useParams } from "next/navigation";
 
 export default function Page() {
+  const params = useParams<{ item: string }>();
   const createVenue = useCreateVenue();
   const onCreate = (data: VenueSchemaType) => {
     const keyNoti = notifications.show({

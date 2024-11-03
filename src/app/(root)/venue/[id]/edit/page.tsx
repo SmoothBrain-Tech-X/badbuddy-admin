@@ -3,9 +3,10 @@ import { Text } from "@mantine/core";
 import { type VenueSchemaType } from "@/schemas/venues/venue.schema";
 import VenueForm from "../../_components/VenueForm/VenueForm";
 import useGetVenue from "@/hooks/venue/useGetVenue";
+import { useParams } from "next/navigation";
 
-export default function Page({ params: { id } }: { params: { id: string } }) {
-  const getVenue = useGetVenue({ venue_id: id });
+export default function Page() {
+  const params = useParams<{ id: string }>();
   const onEdit = (data: VenueSchemaType) => {
     console.log(data);
   };

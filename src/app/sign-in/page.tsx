@@ -2,8 +2,10 @@
 import { signIn } from "next-auth/react";
 import { Alert, Button, Card, PasswordInput, TextInput } from "@mantine/core";
 import { IconLock, IconMail } from "@tabler/icons-react";
+import { useParams } from "next/navigation";
 
-export default function Page(props: { searchParams: { error: string } }) {
+export default function Page() {
+  const params = useParams<{ error: string }>();
   return (
     <div className="flex min-h-screen flex-col items-center justify-center">
       <Card withBorder maw={400} w={"100%"}>
@@ -25,9 +27,7 @@ export default function Page(props: { searchParams: { error: string } }) {
             });
           }}
         >
-          {props.searchParams.error && (
-            <Alert color="red">{props.searchParams.error}</Alert>
-          )}
+          {params.error && <Alert color="red">{params.error}</Alert>}
 
           <TextInput
             label="Email"

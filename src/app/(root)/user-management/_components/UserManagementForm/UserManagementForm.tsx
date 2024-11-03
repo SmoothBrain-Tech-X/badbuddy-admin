@@ -41,12 +41,9 @@ export default function UserManagementForm(props: Props) {
       setValue("email", props.data.email);
       setValue("phone", props.data.phone);
       setValue("address", props.data.address);
-      setValue("close_time", props.data.close_time);
       setValue("description", props.data.description);
       setValue("email", props.data.email);
       setValue("image_urls", props.data.image_urls);
-      setValue("open_time", props.data.open_time);
-      setValue("status", props.data.status);
     }
   }, [props.data, setValue]);
 
@@ -110,7 +107,7 @@ export default function UserManagementForm(props: Props) {
           }}
         />
       </div>
-      <div className="flex items-baseline gap-3">
+      {/* <div className="flex items-baseline gap-3">
         <ControlledTimeInput
           control={control}
           name="open_time"
@@ -144,7 +141,7 @@ export default function UserManagementForm(props: Props) {
               label: status.label,
             })) ?? [],
         }}
-      />
+      /> */}
       <Button loading={props.isLoading} type="submit">
         {props.type === "create" ? "Create" : "Save"}
       </Button>
