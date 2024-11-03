@@ -3,6 +3,7 @@ import {
   IconBuildingCommunity,
   IconCalendarEvent,
   IconDashboard,
+  IconHome,
   IconUser,
 } from "@tabler/icons-react";
 import Link from "next/link";
@@ -27,6 +28,11 @@ export const navigationItems: NavigationItem[] = [
     label: "User",
     icon: IconUser,
     link: "/user-management",
+  },
+  {
+    label: "Facilities",
+    icon: IconHome,
+    link: "/facilitie",
   },
 ];
 

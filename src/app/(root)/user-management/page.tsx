@@ -48,7 +48,7 @@ export default function UserManagementPage() {
       <div className="overflow-x-auto">
         <Table
           bordered
-          loading={getVenues.isLoading}
+          loading={getVenues.isLoading || getVenues.isRefetching}
           dataSource={getVenues.data?.users}
           expandable={{
             expandedRowRender: (record) => (

@@ -10,6 +10,7 @@ import {
   SuccessNotificationData,
 } from "@/configs/NotificationData/NotificationData";
 import { useRouter } from "next/navigation";
+import BackButton from "@/app/_components/BackButton/BackButton";
 
 export default function Page() {
   const navigate = useRouter();
@@ -39,6 +40,7 @@ export default function Page() {
   };
   return (
     <div className="flex flex-col">
+      <BackButton />
       <Text size="xl" fw={700}>
         Create Venue
       </Text>

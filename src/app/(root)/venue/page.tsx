@@ -57,7 +57,7 @@ export default function Page() {
               setLimit(pageSize);
             },
           }}
-          loading={getVenues.isLoading}
+          loading={getVenues.isLoading || getVenues.isRefetching}
           dataSource={getVenues.data?.venues}
           expandable={{
             expandedRowRender: (record) => (

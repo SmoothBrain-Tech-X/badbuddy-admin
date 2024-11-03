@@ -8,6 +8,7 @@ import {
   LoadingNotificationData,
   SuccessNotificationData,
 } from "@/configs/NotificationData/NotificationData";
+import BackButton from "@/app/_components/BackButton/BackButton";
 
 export default function Page() {
   const createVenue = useCreateVenue();
@@ -35,6 +36,7 @@ export default function Page() {
   };
   return (
     <div className="flex flex-col">
+      <BackButton />
       <Text size="xl" fw={700}>
         Create Venue
       </Text>

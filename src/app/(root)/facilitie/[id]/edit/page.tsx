@@ -1,11 +1,6 @@
 "use client";
 import { Box, LoadingOverlay, Text } from "@mantine/core";
-import { format } from "date-fns";
-import { type VenueSchemaType } from "@/schemas/venues/venue.schema";
-import VenueForm from "../../_components/VenueForm/VenueForm";
-import useGetVenue from "@/hooks/venue/useGetVenue";
 import { useParams, useRouter } from "next/navigation";
-import useUpdateVenue from "@/hooks/venue/useUpdateVenue";
 import { notifications } from "@mantine/notifications";
 import {
   ErrorNotificationData,
@@ -13,32 +8,37 @@ import {
   SuccessNotificationData,
 } from "@/configs/NotificationData/NotificationData";
 import BackButton from "@/app/_components/BackButton/BackButton";
+import useGetFacilitie from "@/hooks/facilitie/useGetFacilitie";
+import useUpdateFacilitie from "@/hooks/facilitie/useUpdateFacilitie";
+import { type FacilitieSchemaType } from "@/schemas/facilitie/facilitie.schema";
+import FacilitieForm from "../../_components/FacilitieForm/FacilitieForm";
 
 export default function Page() {
   const navigate = useRouter();
   const params = useParams<{ id: string }>();
-  const getVenue = useGetVenue({ venue_id: params.id });
-  const updateVenue = useUpdateVenue();
-  const onEdit = (data: VenueSchemaType) => {
+
+  const getFacilitie = useGetFacilitie({ facilitie_id: params.id });
+  const updateFacilitie = useUpdateFacilitie();
+
+  const onEdit = (data: FacilitieSchemaType) => {
     if (!params.id) return;
     const keyNoti = notifications.show({
       ...LoadingNotificationData,
-      message: "Creating venue...",
+      message: "Updating facilitie...",
     });
-    updateVenue.mutate(
+    updateFacilitie.mutate(
       {
-        venue_id: params.id,
-        ...data,
-        status: data.status ?? "",
+        facilitie_id: data.facilitie_id!,
+        name: data.name,
       },
       {
         onSuccess: () => {
           notifications.update({
             id: keyNoti,
             ...SuccessNotificationData,
-            message: "Venue updated successfully",
+            message: "Facilitie updated successfully",
           });
-          navigate.push("/venue");
+          navigate.push("/facilitie");
         },
         onError: (error) => {
           notifications.show({
@@ -54,29 +54,19 @@ export default function Page() {
     <>
       <Box pos="relative">
         <LoadingOverlay
-          visible={getVenue.isLoading}
+          visible={getFacilitie.isLoading}
           zIndex={1000}
           overlayProps={{ radius: "sm", blur: 2 }}
         />
         <div className="flex flex-col">
           <BackButton />
           <Text size="xl" fw={700}>
-            Edti Venue
+            Edti Facilitie
           </Text>
-          <VenueForm
+          <FacilitieForm
             type="edit"
+            data={getFacilitie.data}
             onFinish={onEdit}
-            data={{
-              ...getVenue.data,
-              name: getVenue.data?.name ?? "",
-              description: getVenue.data?.description ?? "",
-              address: getVenue.data?.address ?? "",
-              location: getVenue.data?.location ?? "",
-              phone: getVenue.data?.phone ?? "",
-              email: getVenue.data?.email ?? "",
-              image_urls: getVenue.data?.image_urls ?? "",
-              open_range: getVenue.data?.open_range ?? [],
-            }}
           />
         </div>
       </Box>
