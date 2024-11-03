@@ -2,7 +2,7 @@ import axios from "axios";
 import { getSession } from "next-auth/react";
 
 export const getBaseUrl = () => {
-  return process.env.NEXT_PUBLIC_BASE_API;
+  return process.env.NEXT_PUBLIC_BASE_API + "/api";
 };
 
 export const axiosAPI = axios.create({

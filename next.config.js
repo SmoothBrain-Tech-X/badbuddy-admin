@@ -8,7 +8,7 @@ import "./src/env.js";
 const config = {
   env: {
     NEXT_PUBLIC_BASE_API:
-      "https://general-badbuddy-be.tu4rl4.easypanel.host/api",
+      "https://general-badbuddy-be.tu4rl4.easypanel.host",
   },
   output: "standalone"
 };
