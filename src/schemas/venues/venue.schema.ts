@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const venueSchema = z.object({
+  venue_id: z.string().optional(),
   name: z.string(),
   description: z.string(),
   address: z.string(),

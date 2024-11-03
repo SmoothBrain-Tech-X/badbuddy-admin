@@ -39,11 +39,11 @@ export default function UserManagementPage() {
           onChange={(e) => setKeyWord(e.currentTarget.value)}
           value={keyWord}
         />
-        <div>
+        {/* <div>
           <Link href="/user-management/create">
             <Button>Add User</Button>
           </Link>
-        </div>
+        </div> */}
       </div>
       <div className="overflow-x-auto">
         <Table

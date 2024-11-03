@@ -12,28 +12,28 @@ import BackButton from "@/app/_components/BackButton/BackButton";
 
 export default function Page() {
   const createVenue = useCreateVenue();
-  const onCreate = (data: VenueSchemaType) => {
-    const keyNoti = notifications.show({
-      ...LoadingNotificationData,
-      message: "Creating venue...",
-    });
-    createVenue.mutate(data, {
-      onSuccess: () => {
-        notifications.update({
-          id: keyNoti,
-          ...SuccessNotificationData,
-          message: "Venue created successfully",
-        });
-      },
-      onError: (error) => {
-        notifications.show({
-          id: keyNoti,
-          ...ErrorNotificationData,
-          message: error.message,
-        });
-      },
-    });
-  };
+//   const onCreate = (data: VenueSchemaType) => {
+//     const keyNoti = notifications.show({
+//       ...LoadingNotificationData,
+//       message: "Creating venue...",
+//     });
+//     createVenue.mutate(data, {
+//       onSuccess: () => {
+//         notifications.update({
+//           id: keyNoti,
+//           ...SuccessNotificationData,
+//           message: "Venue created successfully",
+//         });
+//       },
+//       onError: (error) => {
+//         notifications.show({
+//           id: keyNoti,
+//           ...ErrorNotificationData,
+//           message: error.message,
+//         });
+//       },
+//     });
+//   };
   return (
     <div className="flex flex-col">
       <BackButton />

@@ -76,6 +76,9 @@ export default function Page() {
               email: getVenue.data?.email ?? "",
               image_urls: getVenue.data?.image_urls ?? "",
               open_range: getVenue.data?.open_range ?? [],
+              facilities: getVenue.data?.facilities ?? [],
+              rules: getVenue.data?.rules ?? [],
+              status: getVenue.data?.status ?? "",
             }}
           />
         </div>

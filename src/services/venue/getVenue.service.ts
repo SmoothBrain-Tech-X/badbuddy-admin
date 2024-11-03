@@ -15,6 +15,17 @@ interface RootObject {
   rating: number;
   total_reviews: number;
   courts: Court[];
+  facilities: Facility[];
+  rules: Rule[];
+}
+
+interface Rule {
+  rule: string;
+}
+
+interface Facility {
+  id: string;
+  name: string;
 }
 
 interface Court {
