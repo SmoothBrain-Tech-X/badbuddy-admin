@@ -27,7 +27,7 @@ const ControlledSwitch = <T extends FieldValues>(
             <Switch
               error={error?.message}
               {...props.props}
-              value={value}
+              checked={value}
               onChange={onChange}
             />
           </>

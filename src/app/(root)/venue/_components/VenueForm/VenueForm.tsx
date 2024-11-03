@@ -6,7 +6,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
 import ControlledInputText from "../../../../_components/Controlled/ControlledInputText";
-import { ActionIcon, Button, InputLabel } from "@mantine/core";
+import { ActionIcon, Button, Divider, InputLabel } from "@mantine/core";
 import { useEffect } from "react";
 import ControlledInputTextarea from "../../../../_components/Controlled/ControlledInputTextarea";
 import ControlledSelect from "@/app/_components/Controlled/ControlledSelect";
