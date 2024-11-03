@@ -7,6 +7,7 @@ import {
   IconUserCircle,
 } from "@tabler/icons-react";
 import { signOut, useSession } from "next-auth/react";
+import Link from "next/link";
 
 export default function AccountNavbarMenu() {
   const { data } = useSession();
@@ -24,7 +25,7 @@ export default function AccountNavbarMenu() {
           <div className="text-xs text-gray-500">{data?.user.email}</div>
         </div>
         <div className="group relative">
-          <Menu shadow="md" width={200}>
+          <Menu shadow="md" width={200} position="bottom-end">
             <Menu.Target>
               <ActionIcon variant="light">
                 <IconChevronRight size={16} />
@@ -43,6 +44,15 @@ export default function AccountNavbarMenu() {
               >
                 Sign out
               </Menu.Item>
+              <Link href="/profile">
+                <Menu.Item
+                  leftSection={
+                    <IconSettings style={{ width: rem(14), height: rem(14) }} />
+                  }
+                >
+                  Edit Profile
+                </Menu.Item>
+              </Link>
             </Menu.Dropdown>
           </Menu>
         </div>

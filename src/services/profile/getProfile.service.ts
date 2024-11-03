@@ -21,9 +21,9 @@ interface RootObject {
   regular_partners: number;
 }
 
-export type IGetUser = {};
+export type IGetProfile = {};
 
-const getUser = async (props?: IGetUser) => {
+const getProfile = async (props?: IGetProfile) => {
   try {
     const res = await axiosAPIWithoutAuth.get<RootObject>(`/users/profile`);
     return res.data;
@@ -32,4 +32,4 @@ const getUser = async (props?: IGetUser) => {
   }
 };
 
-export default getUser;
+export default getProfile;
