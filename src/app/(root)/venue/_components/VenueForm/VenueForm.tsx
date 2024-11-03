@@ -1,16 +1,18 @@
+"use client";
 import {
   venueSchema,
   type VenueSchemaType,
 } from "@/schemas/venues/venue.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import ControlledInputText from "../../../../_components/Controlled/ControlledInputText";
-import { Button } from "@mantine/core";
+import { ActionIcon, Button, InputLabel } from "@mantine/core";
 import { useEffect } from "react";
 import ControlledInputTextarea from "../../../../_components/Controlled/ControlledInputTextarea";
-import ControlledSelect from "../../../../_components/Controlled/ControlledSelect";
-import ControlledTimeInput from "../../../../_components/Controlled/ControlledTimeInput";
-import { venueStatus } from "utils/VenueStatusMap";
+import ControlledSelect from "@/app/_components/Controlled/ControlledSelect";
+import { IconPlus, IconTrash } from "@tabler/icons-react";
+import ControlledTimeInput from "@/app/_components/Controlled/ControlledTimeInput";
+import ControlledSwitch from "@/app/_components/Controlled/ControlledSwitch";
 
 interface Props {
   type: "create" | "edit";
@@ -30,6 +32,11 @@ export default function VenueForm(props: Props) {
     resolver: zodResolver(venueSchema),
   });
 
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "open_range",
+  });
+
   const onFinish = (data: VenueSchemaType) => {
     console.log(data);
     props.onFinish?.(data);
@@ -41,14 +48,23 @@ export default function VenueForm(props: Props) {
       setValue("email", props.data.email);
       setValue("phone", props.data.phone);
       setValue("address", props.data.address);
-      setValue("close_time", props.data.close_time);
       setValue("description", props.data.description);
+      setValue("open_range", props.data.open_range);
       setValue("email", props.data.email);
       setValue("image_urls", props.data.image_urls);
-      setValue("open_time", props.data.open_time);
-      setValue("status", props.data.status);
+      setValue("location", props.data.location);
     }
   }, [props.data, setValue]);
+
+  const day = [
+    { value: "Monday", label: "Monday" },
+    { value: "Tuesday", label: "Tuesday" },
+    { value: "Wednesday", label: "Wednesday" },
+    { value: "Thursday", label: "Thursday" },
+    { value: "Friday", label: "Friday" },
+    { value: "Saturday", label: "Saturday" },
+    { value: "Sunday", label: "Sunday" },
+  ];
 
   return (
     <form className="flex flex-col gap-3" onSubmit={handleSubmit(onFinish)}>
@@ -89,6 +105,15 @@ export default function VenueForm(props: Props) {
             withAsterisk: true,
           }}
         />
+        <ControlledInputText
+          control={control}
+          name="location"
+          props={{
+            label: "Location",
+            placeholder: "Location",
+            withAsterisk: true,
+          }}
+        />
       </div>
       <div className="flex items-baseline gap-3">
         <ControlledInputText
@@ -110,41 +135,61 @@ export default function VenueForm(props: Props) {
           }}
         />
       </div>
-      <div className="flex items-baseline gap-3">
-        <ControlledTimeInput
-          control={control}
-          name="open_time"
-          props={{
-            label: "Open Time",
-            placeholder: "Select open time",
-            withAsterisk: true,
-            className: "w-full",
-          }}
-        />
-        <ControlledTimeInput
-          control={control}
-          name="close_time"
-          props={{
-            label: "Close Time",
-            placeholder: "Select close time",
-            withAsterisk: true,
-            className: "w-full",
-          }}
-        />
+      <div className="flex flex-col gap-2">
+        <InputLabel>Open Range</InputLabel>
+        {fields.map((field, index) => (
+          <div className="flex items-baseline gap-3" key={field.id}>
+            <ControlledSelect
+              control={control}
+              name={`open_range.${index}.day`}
+              props={{
+                label: "Day",
+                data: day,
+              }}
+            />
+            <ControlledTimeInput
+              control={control}
+              name={`open_range.${index}.open_time`}
+              props={{
+                label: "Open Time",
+                withAsterisk: true,
+              }}
+            />
+            <ControlledTimeInput
+              control={control}
+              name={`open_range.${index}.close_time`}
+              props={{
+                label: "Close Time",
+                withAsterisk: true,
+              }}
+            />
+            <ControlledSwitch
+              control={control}
+              name={`open_range.${index}.is_open`}
+              props={{
+                label: "Is Open",
+                className: "translate-y-[35px]",
+              }}
+            />
+            <div className="translate-y-[35px]">
+              <ActionIcon
+                onClick={() => remove(index)}
+                color="red"
+                variant="subtle"
+              >
+                <IconTrash />
+              </ActionIcon>
+            </div>
+          </div>
+        ))}
+        <ActionIcon
+          onClick={() =>
+            append({ day: "", close_time: "", open_time: "", is_open: false })
+          }
+        >
+          <IconPlus />
+        </ActionIcon>
       </div>
-      <ControlledSelect
-        control={control}
-        name="status"
-        props={{
-          label: "Status",
-          placeholder: "Status",
-          data:
-            venueStatus.map((status) => ({
-              value: status.value,
-              label: status.label,
-            })) ?? [],
-        }}
-      />
       <Button loading={props.isLoading} type="submit">
         {props.type === "create" ? "Create" : "Save"}
       </Button>

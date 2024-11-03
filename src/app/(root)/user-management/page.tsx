@@ -1,25 +1,26 @@
 "use client";
 
+import useGetUsersSearch from "@/hooks/user/useGetUsersSearch";
 import useGetVenuesSearch from "@/hooks/venue/useGetVenuesSearch";
-import { ActionIcon, Badge, Button, Text, TextInput } from "@mantine/core";
-import { IconPencil, IconSearch } from "@tabler/icons-react";
+import { Badge, Button, Text, TextInput } from "@mantine/core";
+import { IconSearch } from "@tabler/icons-react";
 import { Table } from "antd";
 import { type ColumnProps } from "antd/es/table";
 import Link from "next/link";
 import { useState } from "react";
 import { getVenueStatusMap } from "utils/VenueStatusMap";
 
-export default function Page() {
+export default function UserManagementPage() {
   const [keyWord, setKeyWord] = useState("");
   const [offset, setOffset] = useState(0);
   const [limit, setLimit] = useState(10);
-  const getVenues = useGetVenuesSearch({
+  const getVenues = useGetUsersSearch({
     q: keyWord,
     offset,
     limit,
   });
 
-  type ColumnType = NonNullable<typeof getVenues.data>["venues"] extends
+  type ColumnType = NonNullable<typeof getVenues.data>["Users"] extends
     | (infer T)[]
     | null
     | undefined
@@ -29,20 +30,21 @@ export default function Page() {
   return (
     <div className="flex flex-col gap-3">
       <Text size="xl" fw={700}>
-        Venues Manager
+        Users Manager
       </Text>
       <div className="flex items-center justify-between">
         <TextInput
-          placeholder="Search Venues"
+          placeholder="Search Users"
           leftSection={<IconSearch size={16} />}
           onChange={(e) => setKeyWord(e.currentTarget.value)}
           value={keyWord}
         />
         <div>
-          <Link href="/venue/create">
-            <Button>Add Venue</Button>
+          <Link href="/user-management/create">
+            <Button>Add User</Button>
           </Link>
         </div>
+        <div></div>
       </div>
       <div className="overflow-x-auto">
         <Table
@@ -58,7 +60,7 @@ export default function Page() {
             },
           }}
           loading={getVenues.isLoading}
-          dataSource={getVenues.data?.venues}
+          dataSource={getVenues.data?.Users}
           expandable={{
             expandedRowRender: (record) => (
               <p style={{ margin: 0 }}>{record.description}</p>
@@ -96,18 +98,6 @@ export default function Page() {
                   >
                     {getVenueStatusMap(record.status)?.label}
                   </Badge>
-                ),
-              },
-              {
-                title: "Action",
-                render: (_, record) => (
-                  <div className="flex gap-2">
-                    <Link href={`/venue/${record.id}/edit`}>
-                      <ActionIcon variant="subtle">
-                        <IconPencil />
-                      </ActionIcon>
-                    </Link>
-                  </div>
                 ),
               },
             ] as ColumnProps<ColumnType>[]

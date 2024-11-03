@@ -3,6 +3,7 @@ import {
   IconBuildingCommunity,
   IconCalendarEvent,
   IconDashboard,
+  IconUser,
 } from "@tabler/icons-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -17,33 +18,16 @@ interface NavigationItem {
 }
 
 export const navigationItems: NavigationItem[] = [
-//   {
-//     label: "Dashboard",
-//     icon: IconDashboard,
-//     link: "/dashboard",
-//   },
-  //   {
-  //     label: 'Users',
-  //     icon: IconUsers,
-  //     link: '/user',
-  //     badge: '2.1K',
-  //   },
   {
     label: "Venues",
     icon: IconBuildingCommunity,
     link: "/venue",
   },
   {
-    label: "Reservation",
-    icon: IconCalendarEvent,
-    link: "/reservation",
+    label: "User",
+    icon: IconUser,
+    link: "/user-management",
   },
-  //   {
-  //     label: 'Parties',
-  //     icon: IconCalendarEvent,
-  //     link: '/partie',
-  //     badge: '156',
-  //   },
 ];
 
 export default function NavbarMenu(props: Props) {

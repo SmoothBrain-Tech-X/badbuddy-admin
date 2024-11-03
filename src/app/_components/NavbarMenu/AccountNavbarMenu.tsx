@@ -38,7 +38,7 @@ export default function AccountNavbarMenu() {
                   <IconLogout style={{ width: rem(14), height: rem(14) }} />
                 }
                 onClick={() => {
-                    void signOut();
+                  void signOut();
                 }}
               >
                 Sign out
