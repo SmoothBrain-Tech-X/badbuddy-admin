@@ -15,6 +15,7 @@ import ControlledTimeInput from "@/app/_components/Controlled/ControlledTimeInpu
 import ControlledSwitch from "@/app/_components/Controlled/ControlledSwitch";
 import { venueStatus } from "utils/VenueStatusMap";
 import useGetFacilities from "@/hooks/facilitie/useGetFacilities";
+import useGetProvinces from "@/hooks/location/useGetProvinces";
 
 interface Props {
   type: "create" | "edit";
@@ -35,6 +36,7 @@ export default function VenueForm(props: Props) {
   });
 
   const getFacilities = useGetFacilities();
+  const getProvinces = useGetProvinces();
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -146,13 +148,17 @@ export default function VenueForm(props: Props) {
             withAsterisk: true,
           }}
         />
-        <ControlledInputText
+        <ControlledSelect
           control={control}
           name="location"
           props={{
             label: "Location",
-            placeholder: "Location",
-            withAsterisk: true,
+            data: getProvinces.data?.map((province) => ({
+              value: province.name_en,
+              label: `${province.name_en} (${province.name_th})`,
+            })),
+            className: "w-full",
+            searchable: true,
           }}
         />
       </div>
