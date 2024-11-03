@@ -16,6 +16,7 @@ export const venueSchema = z.object({
     }),
   ).min(1),
   image_urls: z.string(),
+  status: z.string().optional(),
 });
 
 export type VenueSchemaType = z.infer<typeof venueSchema>;

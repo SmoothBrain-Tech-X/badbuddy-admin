@@ -1,14 +1,12 @@
 "use client";
 
 import useGetUsersSearch from "@/hooks/user/useGetUsersSearch";
-import useGetVenuesSearch from "@/hooks/venue/useGetVenuesSearch";
-import { Badge, Button, Text, TextInput } from "@mantine/core";
+import { Button, Text, TextInput } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
 import { Table } from "antd";
 import { type ColumnProps } from "antd/es/table";
 import Link from "next/link";
 import { useState } from "react";
-import { getVenueStatusMap } from "utils/VenueStatusMap";
 
 export default function UserManagementPage() {
   const [keyWord, setKeyWord] = useState("");
@@ -20,7 +18,9 @@ export default function UserManagementPage() {
     limit,
   });
 
-  type ColumnType = NonNullable<typeof getVenues.data>["Users"] extends
+  console.log(getVenues.data);
+
+  type ColumnType = NonNullable<typeof getVenues.data>["users"] extends
     | (infer T)[]
     | null
     | undefined
@@ -44,61 +44,36 @@ export default function UserManagementPage() {
             <Button>Add User</Button>
           </Link>
         </div>
-        <div></div>
       </div>
       <div className="overflow-x-auto">
         <Table
           bordered
-          pagination={{
-            current: offset,
-            pageSize: limit,
-            total: getVenues.data?.total,
-            pageSizeOptions: ["10", "20", "50"],
-            onChange: (page, pageSize) => {
-              setOffset(page);
-              setLimit(pageSize);
-            },
-          }}
           loading={getVenues.isLoading}
-          dataSource={getVenues.data?.Users}
+          dataSource={getVenues.data?.users}
           expandable={{
             expandedRowRender: (record) => (
-              <p style={{ margin: 0 }}>{record.description}</p>
+              <p style={{ margin: 0 }}>{record.bio}</p>
             ),
-            rowExpandable: (record) => record.description.length > 0,
+            rowExpandable: (record) => record.bio.length > 0,
           }}
           columns={
             [
               {
                 title: "Name",
-                render: (_, record) => record.name,
+                render: (_, record) =>
+                  record.first_name + " " + record.last_name,
               },
               {
-                title: "Rating",
-                render: (_, record) => record.rating,
+                title: "Gender",
+                render: (_, record) => record.gender,
               },
               {
-                title: "Total Reviews",
-                render: (_, record) => record.total_reviews,
+                title: "Phone",
+                render: (_, record) => record.phone,
               },
               {
                 title: "Email",
                 render: (_, record) => record.email,
-              },
-              {
-                title: "Email",
-                render: (_, record) => record.phone,
-              },
-              {
-                title: "Status",
-                render: (_, record) => (
-                  <Badge
-                    variant="light"
-                    color={getVenueStatusMap(record.status)?.color}
-                  >
-                    {getVenueStatusMap(record.status)?.label}
-                  </Badge>
-                ),
               },
             ] as ColumnProps<ColumnType>[]
           }

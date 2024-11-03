@@ -9,8 +9,7 @@ interface RootObject {
   location: string;
   phone: string;
   email: string;
-  open_time: string;
-  close_time: string;
+  open_range: Openrange[];
   image_urls: string;
   status: string;
   rating: number;
@@ -24,6 +23,13 @@ interface Court {
   description: string;
   price_per_hour: number;
   status: string;
+}
+
+interface Openrange {
+  day: string;
+  is_open: boolean;
+  open_time: string;
+  close_time: string;
 }
 
 export type IGetVenue = {

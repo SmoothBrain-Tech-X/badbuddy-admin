@@ -13,6 +13,7 @@ import ControlledSelect from "@/app/_components/Controlled/ControlledSelect";
 import { IconPlus, IconTrash } from "@tabler/icons-react";
 import ControlledTimeInput from "@/app/_components/Controlled/ControlledTimeInput";
 import ControlledSwitch from "@/app/_components/Controlled/ControlledSwitch";
+import { venueStatus } from "utils/VenueStatusMap";
 
 interface Props {
   type: "create" | "edit";
@@ -53,6 +54,7 @@ export default function VenueForm(props: Props) {
       setValue("email", props.data.email);
       setValue("image_urls", props.data.image_urls);
       setValue("location", props.data.location);
+      setValue("status", props.data.status);
     }
   }, [props.data, setValue]);
 
@@ -68,15 +70,31 @@ export default function VenueForm(props: Props) {
 
   return (
     <form className="flex flex-col gap-3" onSubmit={handleSubmit(onFinish)}>
-      <ControlledInputText
-        control={control}
-        name="name"
-        props={{
-          label: "Name",
-          placeholder: "Name",
-          withAsterisk: true,
-        }}
-      />
+      <div className="flex justify-between gap-3">
+        <ControlledInputText
+          control={control}
+          name="name"
+          props={{
+            label: "Name",
+            placeholder: "Name",
+            withAsterisk: true,
+            className: "w-full",
+          }}
+        />
+        <ControlledSelect
+          control={control}
+          name="status"
+          props={{
+            label: "Status",
+            data:
+              venueStatus.map((status) => ({
+                value: status.value,
+                label: status.label,
+              })) ?? [],
+            className: "w-full",
+          }}
+        />
+      </div>
       <ControlledInputTextarea
         control={control}
         name="description"
@@ -184,7 +202,12 @@ export default function VenueForm(props: Props) {
         ))}
         <ActionIcon
           onClick={() =>
-            append({ day: "", close_time: "", open_time: "", is_open: false })
+            append({
+              day: "",
+              close_time: new Date().toISOString(),
+              open_time: new Date().toISOString(),
+              is_open: false,
+            })
           }
         >
           <IconPlus />

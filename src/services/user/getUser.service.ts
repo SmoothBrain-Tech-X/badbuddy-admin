@@ -22,7 +22,7 @@ interface User {
   last_active_at: string;
 }
 
-export type IGetUsersSearch = {
+export type IGetUser = {
   q?: string;
   limit?: number;
   offset?: number;
@@ -30,7 +30,7 @@ export type IGetUsersSearch = {
   location?: string;
 };
 
-const getUsersSearch = async (props: IGetUsersSearch) => {
+const getUser = async (props: IGetUser) => {
   try {
     const query = qs.stringify(
       {
@@ -52,4 +52,4 @@ const getUsersSearch = async (props: IGetUsersSearch) => {
   }
 };
 
-export default getUsersSearch;
+export default getUser;

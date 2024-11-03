@@ -1,15 +1,22 @@
 import _ from "lodash";
 import { axiosAPIWithoutAuth } from "utils/axios";
 
+interface Openrange {
+  day: string;
+  is_open: boolean;
+  open_time: string;
+  close_time: string;
+}
+
 export type TUpdateVenue = {
   venue_id: string;
   name: string;
   description: string;
   address: string;
+  location: string;
   phone: string;
   email: string;
-  open_time: string;
-  close_time: string;
+  open_range: Openrange[];
   image_urls: string;
   status: string;
 };
