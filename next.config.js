@@ -10,8 +10,7 @@ const config = {
     NEXT_PUBLIC_BASE_API:
       "https://general-badbuddy-be.tu4rl4.easypanel.host/api",
   },
-  output: "standalone",
-  swcMinify: true,
+  output: "standalone"
 };
 
 export default config;
