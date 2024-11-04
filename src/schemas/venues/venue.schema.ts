@@ -32,6 +32,8 @@ export const venueSchema = z.object({
     }),
   ),
   status: z.string().optional(),
+  latitude: z.number(),
+  longitude: z.number(),
 });
 
 export type VenueSchemaType = z.infer<typeof venueSchema>;

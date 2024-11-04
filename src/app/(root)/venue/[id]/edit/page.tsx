@@ -79,6 +79,8 @@ export default function Page() {
               facilities: getVenue.data?.facilities ?? [],
               rules: getVenue.data?.rules ?? [],
               status: getVenue.data?.status ?? "",
+              latitude: getVenue.data?.latitude ?? 0,
+              longitude: getVenue.data?.longitude ?? 0,
             }}
           />
         </div>

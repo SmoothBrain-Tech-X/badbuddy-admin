@@ -17,6 +17,8 @@ interface RootObject {
   courts: Court[];
   facilities: Facility[];
   rules: Rule[];
+  latitude: number;
+  longitude: number;
 }
 
 interface Rule {

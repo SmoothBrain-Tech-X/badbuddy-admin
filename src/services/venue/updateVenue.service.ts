@@ -20,6 +20,8 @@ export type TUpdateVenue = {
   status: string;
   facilities: Facilitie[];
   rules: Rule[];
+  latitude: number;
+  longitude: number;
 };
 
 export type Facilitie = {

@@ -16,6 +16,7 @@ import ControlledSwitch from "@/app/_components/Controlled/ControlledSwitch";
 import { venueStatus } from "utils/VenueStatusMap";
 import useGetFacilities from "@/hooks/facilitie/useGetFacilities";
 import useGetProvinces from "@/hooks/location/useGetProvinces";
+import ControlledInputNumber from "@/app/_components/Controlled/ControlledInputNumber";
 
 interface Props {
   type: "create" | "edit";
@@ -80,6 +81,8 @@ export default function VenueForm(props: Props) {
       setValue("status", props.data.status);
       setValue("facilities", props.data.facilities);
       setValue("rules", props.data.rules);
+      setValue("latitude", props.data.latitude);
+      setValue("longitude", props.data.longitude);
     }
   }, [props.data, setValue]);
 
@@ -159,6 +162,26 @@ export default function VenueForm(props: Props) {
             })),
             className: "w-full",
             searchable: true,
+          }}
+        />
+      </div>
+      <div className="flex justify-around gap-3">
+        <ControlledInputNumber
+          control={control}
+          name="latitude"
+          props={{
+            label: "Latitude",
+            placeholder: "Latitude",
+            withAsterisk: true,
+          }}
+        />
+        <ControlledInputNumber
+          control={control}
+          name="longitude"
+          props={{
+            label: "Longitude",
+            placeholder: "Longitude",
+            withAsterisk: true,
           }}
         />
       </div>
