@@ -20,6 +20,8 @@ interface User {
   play_hand: string;
   avatar_url: string;
   last_active_at: string;
+  role: string;
+  venues: null;
 }
 
 export type IGetUsersSearch = {
