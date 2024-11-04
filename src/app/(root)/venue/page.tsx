@@ -11,7 +11,7 @@ import { getVenueStatusMap } from "utils/VenueStatusMap";
 
 export default function Page() {
   const [keyWord, setKeyWord] = useState("");
-  const [offset, setOffset] = useState(0);
+  const [offset, setOffset] = useState(1);
   const [limit, setLimit] = useState(10);
   const getVenues = useGetVenuesSearch({
     q: keyWord,
@@ -49,7 +49,9 @@ export default function Page() {
           bordered
           pagination={{
             current: offset,
+            defaultPageSize: limit,
             pageSize: limit,
+            showSizeChanger: true,
             total: getVenues.data?.total,
             pageSizeOptions: ["10", "20", "50"],
             onChange: (page, pageSize) => {

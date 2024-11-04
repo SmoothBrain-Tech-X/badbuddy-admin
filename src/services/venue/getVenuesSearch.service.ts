@@ -16,13 +16,40 @@ interface Venue {
   location: string;
   phone: string;
   email: string;
-  open_time: string;
-  close_time: string;
+  open_range: Openrange[];
   image_urls: string;
   status: string;
   rating: number;
   total_reviews: number;
-  courts: null;
+  courts: Court[];
+  facilities: Facility[];
+  rules: Rule[];
+  latitude: number;
+  longitude: number;
+}
+
+interface Rule {
+  rule: string;
+}
+
+interface Facility {
+  id: string;
+  name: string;
+}
+
+interface Court {
+  id: string;
+  name: string;
+  description: string;
+  price_per_hour: number;
+  status: string;
+}
+
+interface Openrange {
+  day: string;
+  is_open: boolean;
+  open_time: string;
+  close_time: string;
 }
 
 export type IGetVenuesSearch = {
