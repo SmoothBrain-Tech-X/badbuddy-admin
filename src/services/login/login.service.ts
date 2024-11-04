@@ -20,8 +20,16 @@ interface User {
   play_level: string;
   location: string;
   bio: string;
+  gender: string;
+  play_hand: string;
   avatar_url: string;
   last_active_at: string;
+  role: string;
+  venues: Venue[];
+}
+
+interface Venue {
+  id: string;
 }
 
 const login = async (props: LoginProps) => {

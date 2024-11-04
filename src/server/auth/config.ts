@@ -8,11 +8,13 @@ declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
       access_token: string;
+      role: string;
     } & DefaultSession["user"];
   }
 
   interface User {
     access_token: string;
+    role: string;
   }
 }
 
@@ -20,6 +22,7 @@ declare module "next-auth/jwt" {
   interface JWT {
     id: string;
     access_token: string;
+    role: string;
   }
 }
 
@@ -38,12 +41,16 @@ export const authConfig = {
             email: credentials.email! as string,
             password: credentials.password! as string,
           });
+          if (res.user.role !== "admin") {
+            throw new Error("You not have permission to access.");
+          }
           return {
             access_token: res.access_token,
             email: res.user.email,
             name: `${res.user.first_name} ${res.user.last_name}`,
             id: res.user.id,
             image: res.user.avatar_url,
+            role: res.user.role,
           };
         } catch (error) {
           if (error instanceof AxiosError) {
@@ -60,6 +67,7 @@ export const authConfig = {
       session.session.user.email = session.token.email ?? "";
       session.session.user.name = session.token.name;
       session.session.user.id = session.token.id;
+      session.session.user.role = session.token.role;
       session.session.user.image = session.token.image as string;
       return session.session;
     },
@@ -71,6 +79,7 @@ export const authConfig = {
           name: user.name,
           id: user.id,
           image: user.image,
+          role: user.role,
         } as JWT;
       }
       return token;
@@ -78,6 +87,7 @@ export const authConfig = {
   },
   pages: {
     signIn: "/sign-in",
+    error: "/sign-in",
   },
   session: {
     strategy: "jwt",
